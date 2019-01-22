@@ -9,6 +9,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MineGenerator.Converter.Bit
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MineGenerator", "MineGenerator\MineGenerator.vbproj", "{10CD85CA-A5CD-4126-B00A-79ACFC42343B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Loader", "Loader", "{C2EBFBC7-7206-443B-8242-69A6016E1081}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Builder", "Builder", "{85820DC0-DCCE-4B5C-94A7-CC1DCF8707B6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Storage", "Storage", "{78990E05-A234-4A14-B6B2-1D5E04750875}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MineGenerator.Storage", "MineGenerator.Storage\MineGenerator.Storage.csproj", "{48FA22D1-F200-49CD-A93C-4029D7B30921}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,9 +35,16 @@ Global
 		{10CD85CA-A5CD-4126-B00A-79ACFC42343B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10CD85CA-A5CD-4126-B00A-79ACFC42343B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10CD85CA-A5CD-4126-B00A-79ACFC42343B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48FA22D1-F200-49CD-A93C-4029D7B30921}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48FA22D1-F200-49CD-A93C-4029D7B30921}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48FA22D1-F200-49CD-A93C-4029D7B30921}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48FA22D1-F200-49CD-A93C-4029D7B30921}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{48FA22D1-F200-49CD-A93C-4029D7B30921} = {78990E05-A234-4A14-B6B2-1D5E04750875}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {404ABB83-A826-44DD-B9B8-D7E3113CF7B5}
