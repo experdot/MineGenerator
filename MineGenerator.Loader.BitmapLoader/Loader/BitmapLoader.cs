@@ -1,5 +1,4 @@
 ﻿using MineGenerator.Core;
-using MineGenerator.Core.Converter;
 using System;
 using System.Buffers;
 using System.Collections.Generic;
@@ -9,18 +8,18 @@ using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace MineGenerator.Converter.BitmapConverter
+namespace MineGenerator.Loader
 {
-    public class BitmapConverter : IConverter
+    public class BitmapLoader : ILoader
     {
         public Bitmap Image { get; set; }
 
-        public BitmapConverter(Bitmap image)
+        public BitmapLoader(Bitmap image)
         {
             Image = image;
         }
 
-        public IEnumerable<IBlock> Convert()
+        public IEnumerable<IBlock> Load()
         {
             var width = Image.Width;
             var height = Image.Height;

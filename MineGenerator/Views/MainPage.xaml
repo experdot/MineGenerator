@@ -45,11 +45,11 @@
                 <TextBlock FontSize="16" FontWeight="Bold">1. Get Data</TextBlock>
                 <RadioButton GroupName="DataSource" IsChecked="True">Bitmap File (png recommended)</RadioButton>
                 <RadioButton GroupName="DataSource">Bitmap (from clipboard)</RadioButton>
-                <Button Content="Import"/>
+                <Button Content="Import" Command="{Binding ImportCommand}"/>
             </StackPanel>
             <StackPanel Grid.Row="1" Grid.Column="1" Margin="4,0,0,0">
                 <TextBlock>Preview</TextBlock>
-                <Image MinWidth="120" MinHeight="120"/>
+                <Image MinWidth="120" MinHeight="120" Source="{Binding PreviewImage}"/>
             </StackPanel>
             <StackPanel Grid.Row="2">
                 <TextBlock FontSize="16" FontWeight="Bold">2. Export to Minecraft</TextBlock>

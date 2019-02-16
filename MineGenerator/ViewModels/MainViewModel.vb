@@ -8,10 +8,31 @@ Namespace ViewModels
 
     Public Class MainViewModel
         Inherits ViewModelBase(Of MainViewModel)
-        Implements INotifyPropertyChanged
 
+        Public Property PreviewImage As BitmapSource
+            Get
+                Return BlockManager.RawBitmapSource
+            End Get
+            Set(value As BitmapSource)
+                If Not value.Equals(BlockManager.RawBitmapSource) Then
+                    BlockManager.RawBitmapSource = value
+                    OnPropertyChanged()
+                End If
+            End Set
+        End Property
 
-        Public Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged
+        Public ReadOnly Property ImportCommand As New ImportCommand
+
+        Public ReadOnly BlockManager As New BlockManager
+
+        Public Sub New()
+            AddHandler ImportCommand.BitmapSourceChanged, AddressOf OnBitmapSourceChanged
+        End Sub
+
+        Public Sub OnBitmapSourceChanged(sender As Object, bitmapSource As BitmapSource)
+            PreviewImage = bitmapSource
+            BlockManager.LoadBlocks()
+        End Sub
     End Class
 
 End Namespace

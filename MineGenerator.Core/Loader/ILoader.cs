@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MineGenerator.Core.Loader
+namespace MineGenerator.Core
 {
     /// <summary>
     /// Represents a block loader.
     /// </summary>
-    interface ILoader
+    public interface ILoader
     {
         IEnumerable<IBlock> Load();
     }
