@@ -125,6 +125,7 @@
     </ApplicationDefinition>
     <Compile Include="Commands\ImportCommand.vb" />
     <Compile Include="Commands\NavigateToPageCommand.vb" />
+    <Compile Include="Commands\NextCommand.vb" />
     <Compile Include="Commands\RelayCommand.vb" />
     <Compile Include="Helpers\NotConverter.vb" />
     <Compile Include="Helpers\NotVisibilityConverter.vb" />
@@ -266,6 +267,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MineGenerator.Builder.KeyboardSimulator\MineGenerator.Builder.KeyboardSimulator.csproj">
+      <Project>{418A1145-239E-4D91-852E-EB4E93EF95A3}</Project>
+      <Name>MineGenerator.Builder.KeyboardSimulator</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MineGenerator.Core\MineGenerator.Core.csproj">
       <Project>{C5404E1D-BAEF-4702-B279-9242CD03EA5A}</Project>
       <Name>MineGenerator.Core</Name>

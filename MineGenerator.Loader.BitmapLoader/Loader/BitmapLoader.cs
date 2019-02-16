@@ -170,7 +170,7 @@ namespace MineGenerator.Loader
                 for (int x = 0; x < width; x++)
                 {
                     // Replace regular block selector code here.
-                    if (Image.GetPixel(x, y).A == 0)
+                    if (Image.GetPixel(x, y).A > 128)
                     {
                         yield return new Block(new Vector3(x, y, 0));
                     }

@@ -55,7 +55,7 @@
                 <TextBlock FontSize="16" FontWeight="Bold">2. Export to Minecraft</TextBlock>
                 <RadioButton GroupName="Output" IsChecked="True">Command with Keyboard input by</RadioButton>
                 <RadioButton GroupName="Output">Write command to text file</RadioButton>
-                <Button Content="Next"/>
+                <Button Content="Next" Command="{Binding NextCommand}"/>
             </StackPanel>
         </Grid>
     </ScrollViewer>

@@ -22,16 +22,19 @@ Namespace ViewModels
         End Property
 
         Public ReadOnly Property ImportCommand As New ImportCommand
+        Public ReadOnly Property NextCommand As New NextCommand
 
         Public ReadOnly BlockManager As New BlockManager
 
         Public Sub New()
             AddHandler ImportCommand.BitmapSourceChanged, AddressOf OnBitmapSourceChanged
+            NextCommand.KeyboardSimulationAction = Sub()
+                                                       BlockManager.Build()
+                                                   End Sub
         End Sub
 
         Public Sub OnBitmapSourceChanged(sender As Object, bitmapSource As BitmapSource)
             PreviewImage = bitmapSource
-            BlockManager.LoadBlocks()
         End Sub
     End Class
 

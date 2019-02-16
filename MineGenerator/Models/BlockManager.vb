@@ -1,13 +1,17 @@
-﻿Imports MineGenerator.Loader
+﻿Imports MineGenerator.Builder
+Imports MineGenerator.Loader
 
 Namespace Models
     Public Class BlockManager
         Public Property RawBitmapSource As BitmapSource
 
-        Public Sub LoadBlocks()
+        Public Sub Build()
+            ' Load blocks
             Dim loader = New BitmapLoader(ConvertBitmapSourceToBitmap(RawBitmapSource))
             Dim blocks = loader.Load()
-            Debug.WriteLine(blocks.Count)
+            ' Build blocks
+            Dim builder = New KeyboardSimulator()
+            builder.Build(blocks)
         End Sub
 
         Private Function ConvertBitmapSourceToBitmap(source As BitmapSource) As System.Drawing.Bitmap
