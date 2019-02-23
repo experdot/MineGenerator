@@ -7,7 +7,7 @@ namespace MineGenerator.Core.Storage
     public class Package
     {
         public Guid Id { get; set; }
-        public IEnumerable<IBlock> Blocks { get; set; }
+        public IEnumerable<IRegion> Regions { get; set; }
         public Dictionary<string, object> ExtendProperties { get; set; }
 
         public Package()

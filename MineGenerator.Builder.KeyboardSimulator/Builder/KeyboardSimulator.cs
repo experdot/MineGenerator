@@ -7,37 +7,39 @@ namespace MineGenerator.Builder
 {
     public class KeyboardSimulator : IBuilder
     {
-        public void Build(IEnumerable<IBlock> blocks)
+        public void Build(IEnumerable<IRegion> regions)
         {
             System.Threading.Thread.Sleep(8000);// Delay 3000ms
-            foreach (var item in blocks)
+            foreach (var item in regions)
             {
                 BuildSingleBlock(item);
             }
         }
 
-        public void BuildSingleBlock(IBlock block)
+        public void BuildSingleBlock(IRegion region)
         {
-            var command = GenerateCommand(block);
+            var command = GenerateCommand(region);
             VirtualKeyboard.SendKey(VirtualKeys.VK_T);
             System.Threading.Thread.Sleep(200);
             VirtualKeyboard.SendKey(VirtualKeys.VK_RETURN);
             System.Threading.Thread.Sleep(200);
             Clipboard.SetText(command);
-            System.Threading.Thread.Sleep(100);
             VirtualKeyboard.SendCouple(VirtualKeys.VK_CONTROL, VirtualKeys.VK_V);
             System.Threading.Thread.Sleep(100);
             VirtualKeyboard.SendKey(VirtualKeys.VK_RETURN);
-            System.Threading.Thread.Sleep(200);
+            System.Threading.Thread.Sleep(100);
         }
 
-        public string GenerateCommand(IBlock block)
+        public string GenerateCommand(IRegion region)
         {
-            var x = Math.Round(block.Location.X);
-            var y = Math.Round(block.Location.Y);
-            var z = Math.Round(block.Location.Z);
+            var sx = Math.Round(region.Start.X);
+            var sy = Math.Round(region.Start.Y);
+            var sz = Math.Round(region.Start.Z);
+            var ex = Math.Round(region.End.X);
+            var ey = Math.Round(region.End.Y);
+            var ez = Math.Round(region.End.Z);
 
-            return $"/fill ~{x} ~{y} ~{z} ~{x} ~{y} ~{z + 100} concrete";
+            return $"/fill ~{sx} ~{sy} ~{sz} ~{ex} ~{ey} ~{ez} concrete";
         }
     }
 }

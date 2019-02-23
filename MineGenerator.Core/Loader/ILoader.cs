@@ -9,6 +9,6 @@ namespace MineGenerator.Core
     /// </summary>
     public interface ILoader
     {
-        IEnumerable<IBlock> Load();
+        IEnumerable<IRegion> Load();
     }
 }

@@ -9,6 +9,6 @@ namespace MineGenerator.Core
     /// </summary>
     public interface IBuilder
     {
-        void Build(IEnumerable<IBlock> blocks);
+        void Build(IEnumerable<IRegion> regions);
     }
 }

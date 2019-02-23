@@ -7,6 +7,7 @@ using System.Drawing.Imaging;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Region = MineGenerator.Core.Region;
 
 namespace MineGenerator.Loader
 {
@@ -19,24 +20,24 @@ namespace MineGenerator.Loader
             Image = image;
         }
 
-        public IEnumerable<IBlock> Load()
+        public IEnumerable<IRegion> Load()
         {
             var width = Image.Width;
             var height = Image.Height;
             if (Image.PixelFormat == PixelFormat.Format32bppArgb)
             {
                 var data = Image.LockBits(new Rectangle(0, 0, Image.Width, Image.Height), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
-                var blocks = new List<Block>();
+                var regions = new List<Region>();
                 if (Vector.IsHardwareAccelerated)
                 {
-                    HardwareAcceleratedUnsafeConvert(data, blocks);
+                    HardwareAcceleratedUnsafeConvert(data, regions);
                 }
                 else
                 {
-                    PortableUnsafeConvert(data, blocks);
+                    PortableUnsafeConvert(data, regions);
                 }
                 Image.UnlockBits(data);
-                return blocks;
+                return regions;
             }
             else
             {
@@ -45,7 +46,7 @@ namespace MineGenerator.Loader
             }
         } // End Sub
 
-        private static unsafe void PortableUnsafeConvert(BitmapData data, List<Block> blocks)
+        private static unsafe void PortableUnsafeConvert(BitmapData data, List<Region> blocks)
         {
             int height = data.Height;
             int stride = data.Stride;
@@ -57,13 +58,13 @@ namespace MineGenerator.Loader
                     // Replace regular block selector code here.
                     if (*lineStart++ != 0)
                     {
-                        blocks.Add(new Block(new Vector3(x, y, 0)));
+                        blocks.Add(new Region(new Vector3(x, y, 0)));
                     }
                 }
             }
         } // End Sub
 
-        private static unsafe void HardwareAcceleratedUnsafeConvert(BitmapData data, List<Block> blocks)
+        private static unsafe void HardwareAcceleratedUnsafeConvert(BitmapData data, List<Region> regions)
         {
             int height = data.Height;
             int stride = data.Stride;
@@ -77,11 +78,11 @@ namespace MineGenerator.Loader
                 int* curPos = (int*)lineStart;
 
                 // Sse4 / Avx2 / Avx512
-                curPos = HardwareAcceleratedLineInputBlocks(blocks, vectorData, ref blockX, blockY, endOfLine, curPos);
+                curPos = HardwareAcceleratedLineInputBlocks(regions, vectorData, ref blockX, blockY, endOfLine, curPos);
                 // 64-bit
-                curPos = Int64LineInputBlocks(blocks, ref blockX, blockY, endOfLine, curPos);
+                curPos = Int64LineInputBlocks(regions, ref blockX, blockY, endOfLine, curPos);
                 // 32-bit
-                curPos = PortableLineInputBlocks(blocks, ref blockX, blockY, endOfLine, curPos);
+                curPos = PortableLineInputBlocks(regions, ref blockX, blockY, endOfLine, curPos);
 
                 lineStart = endOfLine;
             }
@@ -89,7 +90,7 @@ namespace MineGenerator.Loader
         } // End Sub
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static unsafe int* PortableLineInputBlocks(List<Block> blocks, ref int blockX, int blockY, byte* endOfLine, int* curPos)
+        private static unsafe int* PortableLineInputBlocks(List<Region> regions, ref int blockX, int blockY, byte* endOfLine, int* curPos)
         {
             while (curPos < endOfLine)
             {
@@ -98,7 +99,7 @@ namespace MineGenerator.Loader
                 {
                     // Slow. converted int to float.
                     // Why should we use Vector3 here?
-                    blocks.Add(new Block(new Vector3(blockX, blockY, 0)));
+                    regions.Add(new Region(new Vector3(blockX, blockY, 0)));
                 }
                 blockX++;
             }
@@ -106,7 +107,7 @@ namespace MineGenerator.Loader
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static unsafe int* Int64LineInputBlocks(List<Block> blocks, ref int blockX, int blockY, byte* endOfLine, int* curPos)
+        private static unsafe int* Int64LineInputBlocks(List<Region> regions, ref int blockX, int blockY, byte* endOfLine, int* curPos)
         {
             while (curPos < endOfLine - sizeof(long))
             {
@@ -115,12 +116,12 @@ namespace MineGenerator.Loader
                 {
                     if (curPos[0] != 0)
                     {
-                        blocks.Add(new Block(new Vector3(blockX, blockY, 0)));
+                        regions.Add(new Region(new Vector3(blockX, blockY, 0)));
                     }
                     blockX++;
                     if (curPos[1] != 0)
                     {
-                        blocks.Add(new Block(new Vector3(blockX, blockY, 0)));
+                        regions.Add(new Region(new Vector3(blockX, blockY, 0)));
                     }
                     blockX++;
                 }
@@ -134,7 +135,7 @@ namespace MineGenerator.Loader
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static unsafe int* HardwareAcceleratedLineInputBlocks(List<Block> blocks, int[] vectorData, ref int blockX, int blockY, byte* endOfLine, int* curPos)
+        private static unsafe int* HardwareAcceleratedLineInputBlocks(List<Region> regions, int[] vectorData, ref int blockX, int blockY, byte* endOfLine, int* curPos)
         {
             while (curPos < endOfLine - Vector<byte>.Count)
             {
@@ -152,7 +153,7 @@ namespace MineGenerator.Loader
                 {
                     if (equalsVector[i] != 0)
                     {
-                        blocks.Add(new Block(new Vector3(blockX, blockY, 0)));
+                        regions.Add(new Region(new Vector3(blockX, blockY, 0)));
                     }
                     blockX++;
                 }
@@ -161,7 +162,7 @@ namespace MineGenerator.Loader
             return curPos;
         }
 
-        private IEnumerable<IBlock> SlowConvert()
+        private IEnumerable<IRegion> SlowConvert()
         {
             var width = Image.Width;
             var height = Image.Height;
@@ -172,7 +173,7 @@ namespace MineGenerator.Loader
                     // Replace regular block selector code here.
                     if (Image.GetPixel(x, y).A > 128)
                     {
-                        yield return new Block(new Vector3(x, y, 0));
+                        yield return new Region(new Vector3(x, y, 0));
                     }
                 }
             }
