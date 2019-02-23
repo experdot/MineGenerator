@@ -1,7 +1,4 @@
-﻿Imports System.ComponentModel
-Imports System.Collections.ObjectModel
-Imports System.Windows.Input
-Imports MineGenerator.Models
+﻿Imports MineGenerator.Models
 Imports MineGenerator.Commands
 
 Namespace ViewModels
@@ -24,13 +21,11 @@ Namespace ViewModels
         Public ReadOnly Property ImportCommand As New ImportCommand
         Public ReadOnly Property NextCommand As New NextCommand
 
-        Public ReadOnly BlockManager As New BlockManager
+        Public ReadOnly Property BlockManager As New BlockManager
 
         Public Sub New()
             AddHandler ImportCommand.BitmapSourceChanged, AddressOf OnBitmapSourceChanged
-            NextCommand.KeyboardSimulationAction = Sub()
-                                                       BlockManager.Build()
-                                                   End Sub
+            NextCommand.KeyboardSimulationAction = AddressOf BlockManager.Build
         End Sub
 
         Public Sub OnBitmapSourceChanged(sender As Object, bitmapSource As BitmapSource)
