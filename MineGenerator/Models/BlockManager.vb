@@ -1,5 +1,5 @@
 ﻿Imports MineGenerator.Builder
-Imports MineGenerator.Loader
+Imports MineGenerator.Loader.Geometry
 
 Namespace Models
     Public Class BlockManager
@@ -7,7 +7,10 @@ Namespace Models
 
         Public Sub Build()
             ' Load blocks
-            Dim loader = New BitmapLoader(ConvertBitmapSourceToBitmap(RawBitmapSource))
+            'Dim loader = New BitmapLoader(ConvertBitmapSourceToBitmap(RawBitmapSource))
+            'Dim blocks = loader.Load()
+
+            Dim loader = New GeometryLoader()
             Dim blocks = loader.Load()
             ' Build blocks
             Dim builder = New KeyboardSimulator()

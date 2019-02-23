@@ -9,7 +9,7 @@ namespace MineGenerator.Builder
     {
         public void Build(IEnumerable<IBlock> blocks)
         {
-            System.Threading.Thread.Sleep(3000);// Delay 3000ms
+            System.Threading.Thread.Sleep(8000);// Delay 3000ms
             foreach (var item in blocks)
             {
                 BuildSingleBlock(item);
@@ -20,18 +20,24 @@ namespace MineGenerator.Builder
         {
             var command = GenerateCommand(block);
             VirtualKeyboard.SendKey(VirtualKeys.VK_T);
-            Clipboard.SetText(command);
-            VirtualKeyboard.SendCouple(VirtualKeys.VK_CONTROL, VirtualKeys.VK_V);
+            System.Threading.Thread.Sleep(200);
             VirtualKeyboard.SendKey(VirtualKeys.VK_RETURN);
+            System.Threading.Thread.Sleep(200);
+            Clipboard.SetText(command);
+            System.Threading.Thread.Sleep(100);
+            VirtualKeyboard.SendCouple(VirtualKeys.VK_CONTROL, VirtualKeys.VK_V);
+            System.Threading.Thread.Sleep(100);
+            VirtualKeyboard.SendKey(VirtualKeys.VK_RETURN);
+            System.Threading.Thread.Sleep(200);
         }
 
         public string GenerateCommand(IBlock block)
         {
-            var x = block.Location.X;
-            var y = block.Location.Y;
-            var z = block.Location.Z;
+            var x = Math.Round(block.Location.X);
+            var y = Math.Round(block.Location.Y);
+            var z = Math.Round(block.Location.Z);
 
-            return $"/fill ~{x} ~{y} ~{z} ~{x} ~{y} ~{z} concrete";
+            return $"/fill ~{x} ~{y} ~{z} ~{x} ~{y} ~{z + 100} concrete";
         }
     }
 }

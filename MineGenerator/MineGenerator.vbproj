@@ -279,6 +279,10 @@
       <Project>{D42997AC-26EF-455E-8A9A-6C8DC8034DEC}</Project>
       <Name>MineGenerator.Loader.BitmapLoader</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MineGenerator.Loader.Geometry\MineGenerator.Loader.Geometry.csproj">
+      <Project>{c0aa4f78-ecb4-4bc9-964e-a5aceb0e0a9b}</Project>
+      <Name>MineGenerator.Loader.Geometry</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
